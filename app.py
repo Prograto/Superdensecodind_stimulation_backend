@@ -1,8 +1,10 @@
 from flask import Flask, request
+from flask_cors import CORS
 from flask_socketio import SocketIO, join_room, emit
 import secrets, hashlib, binascii, random
 from Crypto.Cipher import AES
 from qiskit.quantum_info import Statevector
+from flask_socketio import SocketIO, join_room, emit
 
 # --- Qiskit imports ---
 SIMULATE_QISKIT = True
@@ -14,7 +16,10 @@ except Exception as e:
     SIMULATE_QISKIT = False
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+CORS(app, origins=["http://localhost:5173", "https://superdensecodind-stimulation-backend.onrender.com"])
+
+# Make sure SocketIO also allows CORS
+socketio = SocketIO(app, cors_allowed_origins=["http://localhost:5173", "https://superdensecodind-stimulation-backend.onrender.com"])
 rooms = {}  # room_id -> {'sender':sid,'receiver':sid,'qkd_key':bits}
 
 # --- Helpers ---
