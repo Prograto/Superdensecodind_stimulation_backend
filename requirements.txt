@@ -1,0 +1,5 @@
+Flask>=2.0
+flask-socketio>=5.2
+eventlet>=0.31
+qiskit>=0.40   # optional, can comment if heavy
+pycryptodome>=3.10
